@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Welcome</title>
+
+  <!-- Fonts & Libraries -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    :root {
+      --accent: #fcd34d;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      overflow: hidden;
+      font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    #letter-glitch-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
+    }
+    #glitch-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 0.35;
+      filter: blur(0.6px);
+    }
+    .center-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        rgb(0, 0, 0, 0) 0%,
+        rgb(0, 0, 0, 1) 100%
+      );
+    }
+
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.75rem;
+      min-height: 25svh;
+      padding: 1.5rem 3rem;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .welcome-text {
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 4rem);
+      color: var(--accent);
+      animation: gradient-shift 4s ease infinite;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .subtitle {
+      font-weight: 600;
+      margin: 0.25rem 0 0.75rem 0;
+      font-size: clamp(1.1rem, 3.2vw, 1.6rem);
+      color: var(--accent);
+      animation: gradient-shift 5s ease infinite;
+      opacity: 0;
+      visibility: hidden;
+    }
+    a {
+      text-decoration: none;
+    }
+    @keyframes gradient-shift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-text,
+      .subtitle {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="letter-glitch-bg" aria-hidden="true">
+    <canvas id="glitch-canvas"></canvas>
+    <div class="center-vignette"></div>
+  </div>
+
+  <div class="content-container">
+    <h2 id="welcome-text" class="welcome-text">Welcome to my portfolio!</h2>
+    <p id="subtitle-text" class="subtitle">⚠️ This site is currently being rewritten... ⚠️</p>
+
+    <div class="flex flex-col gap-0 max-w-sm mx-auto relative z-10">
+      <a href="resume.pdf" download>
+        <button
+          class="group relative p-4 rounded-2xl backdrop-blur-xl border-2 border-blue-500/30 bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-black/80 shadow-2xl hover:shadow-blue-500/30 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-blue-400/60 overflow-hidden"
+          aria-label="Download Resume as PDF"
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-blue-400/20 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10 flex items-center gap-4">
+            <div class="p-3 rounded-lg bg-gradient-to-br from-blue-500/30 to-blue-600/10 backdrop-blur-sm group-hover:from-blue-400/40 group-hover:to-blue-500/20 transition-all duration-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                class="w-7 h-7 fill-current text-blue-400 group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110 drop-shadow-lg"
+                role="img"
+                aria-hidden="true"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
+                ></path>
+              </svg>
+            </div>
+            <div class="flex-1 text-left">
+              <p class="text-blue-400 font-bold text-lg group-hover:text-blue-300 transition-colors duration-300 drop-shadow-sm">
+                Resume
+              </p>
+              <p class="text-blue-300/60 text-sm group-hover:text-blue-200/80 transition-colors duration-300">
+                Download PDF
+              </p>
+            </div>
+            <div class="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+              <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" class="w-5 h-5 text-blue-400" aria-hidden="true">
+                <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    class LetterGlitch {
+      constructor(canvas, options = {}) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
+        this.glitchColors = options.glitchColors || ["#8A2B1F", "#91775B", "#2B4876"];
+        this.glitchSpeed = options.glitchSpeed || 400;
+        this.smooth = options.smooth ?? false;
+
+        this.fontSize = 24;
+        this.charWidth = 26;
+        this.charHeight = 36;
+
+        this.letters = [];
+        this.grid = { columns: 0, rows: 0 };
+        this.lastGlitchTime = Date.now();
+        this.animationId = null;
+        this.drawW = 0;
+        this.drawH = 0;
+
+        this.lettersAndSymbols = [
+          ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          ..."!@#$&*()-_+=/[]{};:<>,".split(""),
+          ..."0123456789",
+        ];
+        this.init();
+      }
+      getRandomChar() {
+        return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)];
+      }
+      getRandomColor() {
+        return this.glitchColors[Math.floor(Math.random() * this.glitchColors.length)];
+      }
+      calculateGrid(w, h) {
+        return { columns: Math.ceil(w / this.charWidth) + 2, rows: Math.ceil(h / this.charHeight) + 2 };
+      }
+      initializeLetters(c, r) {
+        this.grid = { columns: c, rows: r };
+        this.letters = Array.from({ length: c * r }, () => ({
+          char: this.getRandomChar(),
+          color: this.getRandomColor(),
+        }));
+      }
+      resizeCanvas() {
+        const parent = this.canvas.parentElement;
+        if (!parent) return;
+        const dpr = window.devicePixelRatio || 1;
+        const rect = parent.getBoundingClientRect();
+        this.drawW = Math.floor(rect.width);
+        this.drawH = Math.floor(rect.height);
+        this.canvas.width = this.drawW * dpr;
+        this.canvas.height = this.drawH * dpr;
+        this.canvas.style.width = `${this.drawW}px`;
+        this.canvas.style.height = `${this.drawH}px`;
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const { columns, rows } = this.calculateGrid(this.drawW, this.drawH);
+        this.initializeLetters(columns, rows);
+        this.drawLetters();
+      }
+      drawLetters() {
+        if (!this.ctx || !this.letters.length) return;
+        this.ctx.clearRect(0, 0, this.drawW, this.drawH);
+        this.ctx.font = `${this.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+        this.ctx.textBaseline = "top";
+        this.letters.forEach((cell, i) => {
+          const col = i % this.grid.columns;
+          const row = Math.floor(i / this.grid.columns);
+          const x = (col - 1) * this.charWidth;
+          const y = (row - 1) * this.charHeight;
+          this.ctx.fillStyle = cell.color;
+          this.ctx.fillText(cell.char, x, y);
+        });
+      }
+      updateLetters() {
+        if (!this.letters.length) return;
+        const n = Math.max(1, Math.floor(this.letters.length * 0.01));
+        for (let i = 0; i < n; i++) {
+          const idx = Math.floor(Math.random() * this.letters.length);
+          const cell = this.letters[idx];
+          cell.char = this.getRandomChar();
+          cell.color = this.getRandomColor();
+        }
+      }
+      animate() {
+        const now = Date.now();
+        if (now - this.lastGlitchTime >= this.glitchSpeed) {
+          this.updateLetters();
+          this.drawLetters();
+          this.lastGlitchTime = now;
+        }
+        this.animationId = requestAnimationFrame(() => this.animate());
+      }
+      init() {
+        this.resizeCanvas();
+        this.animate();
+        let t;
+        const onResize = () => {
+          clearTimeout(t);
+          t = setTimeout(() => {
+            cancelAnimationFrame(this.animationId);
+            this.resizeCanvas();
+            this.animate();
+          }, 120);
+        };
+        window.addEventListener("resize", onResize);
+        this.onResize = onResize;
+      }
+      destroy() {
+        if (this.animationId) cancelAnimationFrame(this.animationId);
+        window.removeEventListener("resize", this.onResize);
+      }
+    }
+
+    class SplitTextAnimation {
+      constructor(element, options = {}) {
+        this.element = element;
+        this.text = options.text || element.textContent;
+        this.delay = options.delay || 50;
+        this.duration = options.duration || 0.6;
+        this.ease = options.ease || "power3.out";
+        this.from = options.from || { opacity: 0, y: 40 };
+        this.to = options.to || { opacity: 1, y: 0 };
+        this.onComplete = options.onComplete;
+        this.chars = [];
+        this.timeline = null;
+        this.init();
+      }
+      splitText() {
+        const t = this.text;
+        this.element.innerHTML = "";
+        this.element.style.opacity = "1";
+        this.element.style.visibility = "visible";
+        for (let i = 0; i < t.length; i++) {
+          const span = document.createElement("span");
+          span.textContent = t[i] === " " ? "\u00A0" : t[i];
+          span.style.display = "inline-block";
+          span.style.willChange = "transform, opacity";
+          gsap.set(span, this.from);
+          this.chars.push(span);
+          this.element.appendChild(span);
+        }
+      }
+      animate() {
+        if (!this.chars.length) return;
+        this.timeline = gsap.timeline({
+          onComplete: () => {
+            this.chars.forEach((c) => (c.style.willChange = "auto"));
+            if (this.onComplete) this.onComplete();
+          },
+        });
+        this.timeline.to(this.chars, {
+          ...this.to,
+          duration: this.duration,
+          ease: this.ease,
+          stagger: this.delay / 1000,
+          force3D: true,
+        });
+      }
+      init() {
+        this.splitText();
+        this.animate();
+      }
+      destroy() {
+        if (this.timeline) this.timeline.kill();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("glitch-canvas");
+      if (canvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        new LetterGlitch(canvas, { glitchSpeed: 400, smooth: false });
+      }
+      
+      const welcomeText = document.getElementById("welcome-text");
+      const subtitleText = document.getElementById("subtitle-text");
+      
+      setTimeout(() => {
+        new SplitTextAnimation(welcomeText, {
+          delay: 40,
+          duration: 0.6,
+          ease: "power3.out",
+          from: { opacity: 0, y: 60, rotationX: -90 },
+          to: { opacity: 1, y: 0, rotationX: 0 },
+        });
+      }, 300);
+      
+      setTimeout(() => {
+        new SplitTextAnimation(subtitleText, {
+          delay: 25,
+          duration: 0.5,
+          ease: "power2.out",
+          from: { opacity: 0, y: 40, scale: 0.92 },
+          to: { opacity: 1, y: 0, scale: 1 },
+        });
+      }, 650);
+    });
+  </script>
+</body>
+</html>
