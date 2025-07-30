@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Portfolio | Welcome</title>
 
   <!-- Fonts & Libraries -->
@@ -11,15 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <style>
-    :root {
-      --accent: #fcd34d;
-    }
 
-    html,
-    body {
-      height: 100%;
-    }
+  <style>
+    :root { --accent: #fcd34d; }
+
+    html, body { height: 100%; }
     body {
       margin: 0;
       background: #000;
@@ -29,125 +25,64 @@
       min-height: 100svh;
       overflow-x: hidden;
       font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      padding: 1rem;
+      /* respect notches/safe areas on mobile */
+      padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
+               max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
     }
 
+    /* Background */
     #letter-glitch-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      background: #000;
+      position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #000;
     }
-    #glitch-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      opacity: 0.35;
-      filter: blur(0.6px);
-    }
-    .center-vignette {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(
-        rgba(255, 255, 255, 0) 0%,
-        rgb(0, 0, 0, 1) 100%
-      );
+    #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 0.35; filter: blur(0.6px); }
+    .center-vignette { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(rgba(255,255,255,0) 0%, rgb(0,0,0,1) 100%);
     }
 
     .content-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      gap: 1rem;
-      min-height: 25svh;
-      width: 100%;
-      max-width: 90vw;
-      padding: 2rem 1.5rem;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      border-radius: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .welcome-text {
-      font-weight: 800;
-      line-height: 1.2;
-      margin: 0;
-      font-size: clamp(1.5rem, 6vw, 3.5rem);
-      color: var(--accent);
-      animation: gradient-shift 4s ease infinite;
-      opacity: 0;
-      visibility: hidden;
-      word-break: break-word;
-      hyphens: auto;
-    }
-    .subtitle {
-      font-weight: 600;
-      margin: 0.5rem 0 1rem 0;
-      font-size: clamp(0.9rem, 3vw, 1.4rem);
-      color: var(--accent);
-      animation: gradient-shift 5s ease infinite;
-      opacity: 0;
-      visibility: hidden;
-      word-break: break-word;
-      hyphens: auto;
-    }
-    a {
-      text-decoration: none;
-    }
-    @keyframes gradient-shift {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    /* Mobile optimizations */
-    @media (max-width: 768px) {
-      body {
-        padding: 0.5rem;
-      }
-      .content-container {
-        padding: 1.5rem 1rem;
-        max-width: 95vw;
-        gap: 1.25rem;
-      }
-      .welcome-text {
-        font-size: clamp(1.25rem, 8vw, 2.5rem);
-        line-height: 1.3;
-      }
-      .subtitle {
-        font-size: clamp(0.85rem, 4vw, 1.2rem);
-        margin: 0.75rem 0 1.25rem 0;
-      }
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: 1rem;
+      width: 100%; max-width: 44rem;
+      padding: 2rem 1.25rem;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(10px);
+      border-radius: 1rem; border: 1px solid rgba(255,255,255,0.08);
     }
 
-    @media (max-width: 480px) {
-      .content-container {
-        padding: 1.25rem 0.75rem;
-        max-width: 98vw;
-      }
-      .welcome-text {
-        font-size: clamp(1.1rem, 9vw, 2rem);
-      }
-      .subtitle {
-        font-size: clamp(0.8rem, 4.5vw, 1.1rem);
-      }
+    /* Headings */
+    .welcome-text, .subtitle {
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--accent);
+      opacity: 0; visibility: hidden; /* revealed by JS */
+      /* Better mobile line breaks */
+      text-wrap: balance;            /* modern browsers */
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: auto;
+      letter-spacing: -0.01em;
+    }
+    .welcome-text { font-size: clamp(1.4rem, 8vw, 3.25rem); }
+    .subtitle     { font-weight: 700; font-size: clamp(0.95rem, 4.5vw, 1.25rem); margin-top: .25rem; }
+
+    /* Per-word wrapper created by JS so words don't split mid-word */
+    .word { display: inline-block; white-space: nowrap; } /* allows wrapping *between* words only */
+
+    a { text-decoration: none; }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .content-container { gap: 1.1rem; padding: 1.5rem 1rem; }
+      #glitch-canvas { opacity: 0.28; filter: blur(0.8px); } /* calmer background on phones */
+    }
+    @media (max-width: 420px) {
+      .content-container { max-width: 98vw; padding: 1.25rem .85rem; }
+      .welcome-text { font-size: clamp(1.2rem, 9.5vw, 2.1rem); }
+      .subtitle     { font-size: clamp(0.9rem, 4.5vw, 1.1rem); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .welcome-text,
-      .subtitle {
-        animation: none;
-      }
+      .welcome-text, .subtitle { animation: none; }
     }
   </style>
 </head>
@@ -171,21 +106,11 @@
           <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-blue-400/20 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div class="relative z-10 flex items-center gap-3 sm:gap-4">
             <div class="p-2 sm:p-3 rounded-lg bg-gradient-to-br from-blue-500/30 to-blue-600/10 backdrop-blur-sm group-hover:from-blue-400/40 group-hover:to-blue-500/20 transition-all duration-300">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="w-6 h-6 sm:w-7 sm:h-7 fill-current text-blue-400 group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110 drop-shadow-lg"
-                role="img"
-                aria-hidden="true"
-              >
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"
-                ></path>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   class="w-6 h-6 sm:w-7 sm:h-7 fill-current text-blue-400 group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110 drop-shadow-lg"
+                   role="img" aria-hidden="true">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path>
               </svg>
             </div>
             <div class="flex-1 text-left">
@@ -208,6 +133,7 @@
   </div>
 
   <script>
+    /* ---------- Animated letter-glitch background ---------- */
     class LetterGlitch {
       constructor(canvas, options = {}) {
         this.canvas = canvas;
@@ -234,37 +160,23 @@
         ];
         this.init();
       }
-      getRandomChar() {
-        return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)];
-      }
-      getRandomColor() {
-        return this.glitchColors[Math.floor(Math.random() * this.glitchColors.length)];
-      }
-      calculateGrid(w, h) {
-        return { columns: Math.ceil(w / this.charWidth) + 2, rows: Math.ceil(h / this.charHeight) + 2 };
-      }
+      getRandomChar() { return this.lettersAndSymbols[Math.floor(Math.random() * this.lettersAndSymbols.length)]; }
+      getRandomColor() { return this.glitchColors[Math.floor(Math.random() * this.glitchColors.length)]; }
+      calculateGrid(w, h) { return { columns: Math.ceil(w / this.charWidth) + 2, rows: Math.ceil(h / this.charHeight) + 2 }; }
       initializeLetters(c, r) {
         this.grid = { columns: c, rows: r };
-        this.letters = Array.from({ length: c * r }, () => ({
-          char: this.getRandomChar(),
-          color: this.getRandomColor(),
-        }));
+        this.letters = Array.from({ length: c * r }, () => ({ char: this.getRandomChar(), color: this.getRandomColor() }));
       }
       resizeCanvas() {
-        const parent = this.canvas.parentElement;
-        if (!parent) return;
+        const parent = this.canvas.parentElement; if (!parent) return;
         const dpr = window.devicePixelRatio || 1;
         const rect = parent.getBoundingClientRect();
-        this.drawW = Math.floor(rect.width);
-        this.drawH = Math.floor(rect.height);
-        this.canvas.width = this.drawW * dpr;
-        this.canvas.height = this.drawH * dpr;
-        this.canvas.style.width = `${this.drawW}px`;
-        this.canvas.style.height = `${this.drawH}px`;
+        this.drawW = Math.floor(rect.width); this.drawH = Math.floor(rect.height);
+        this.canvas.width = this.drawW * dpr; this.canvas.height = this.drawH * dpr;
+        this.canvas.style.width = `${this.drawW}px`; this.canvas.style.height = `${this.drawH}px`;
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         const { columns, rows } = this.calculateGrid(this.drawW, this.drawH);
-        this.initializeLetters(columns, rows);
-        this.drawLetters();
+        this.initializeLetters(columns, rows); this.drawLetters();
       }
       drawLetters() {
         if (!this.ctx || !this.letters.length) return;
@@ -293,33 +205,27 @@
       animate() {
         const now = Date.now();
         if (now - this.lastGlitchTime >= this.glitchSpeed) {
-          this.updateLetters();
-          this.drawLetters();
-          this.lastGlitchTime = now;
+          this.updateLetters(); this.drawLetters(); this.lastGlitchTime = now;
         }
         this.animationId = requestAnimationFrame(() => this.animate());
       }
       init() {
-        this.resizeCanvas();
-        this.animate();
+        this.resizeCanvas(); this.animate();
         let t;
         const onResize = () => {
           clearTimeout(t);
           t = setTimeout(() => {
             cancelAnimationFrame(this.animationId);
-            this.resizeCanvas();
-            this.animate();
+            this.resizeCanvas(); this.animate();
           }, 120);
         };
         window.addEventListener("resize", onResize);
         this.onResize = onResize;
       }
-      destroy() {
-        if (this.animationId) cancelAnimationFrame(this.animationId);
-        window.removeEventListener("resize", this.onResize);
-      }
+      destroy() { if (this.animationId) cancelAnimationFrame(this.animationId); window.removeEventListener("resize", this.onResize); }
     }
 
+    /* ---------- Character animation without breaking words ---------- */
     class SplitTextAnimation {
       constructor(element, options = {}) {
         this.element = element;
@@ -334,26 +240,47 @@
         this.timeline = null;
         this.init();
       }
+      /* Wrap each *word* in a container; animate chars inside it */
       splitText() {
         const t = this.text;
         this.element.innerHTML = "";
         this.element.style.opacity = "1";
         this.element.style.visibility = "visible";
-        for (let i = 0; i < t.length; i++) {
-          const span = document.createElement("span");
-          span.textContent = t[i] === " " ? "\u00A0" : t[i];
-          span.style.display = "inline-block";
-          span.style.willChange = "transform, opacity";
-          gsap.set(span, this.from);
-          this.chars.push(span);
-          this.element.appendChild(span);
-        }
+
+        const frag = document.createDocumentFragment();
+        const tokens = t.split(/(\s+)/); // keep spaces as tokens
+
+        tokens.forEach(token => {
+          if (token.trim() === "") {
+            // Preserve spaces/newlines
+            frag.appendChild(document.createTextNode(token));
+          } else {
+            // Word wrapper prevents mid-word breaks
+            const word = document.createElement("span");
+            word.className = "word";
+            word.style.display = "inline-block";
+            word.style.whiteSpace = "nowrap";
+
+            for (let i = 0; i < token.length; i++) {
+              const span = document.createElement("span");
+              span.textContent = token[i];
+              span.style.display = "inline-block";
+              span.style.willChange = "transform, opacity";
+              gsap.set(span, this.from);
+              this.chars.push(span);
+              word.appendChild(span);
+            }
+            frag.appendChild(word);
+          }
+        });
+
+        this.element.appendChild(frag);
       }
       animate() {
         if (!this.chars.length) return;
         this.timeline = gsap.timeline({
           onComplete: () => {
-            this.chars.forEach((c) => (c.style.willChange = "auto"));
+            this.chars.forEach(c => (c.style.willChange = "auto"));
             if (this.onComplete) this.onComplete();
           },
         });
@@ -365,13 +292,8 @@
           force3D: true,
         });
       }
-      init() {
-        this.splitText();
-        this.animate();
-      }
-      destroy() {
-        if (this.timeline) this.timeline.kill();
-      }
+      init() { this.splitText(); this.animate(); }
+      destroy() { if (this.timeline) this.timeline.kill(); }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -379,27 +301,23 @@
       if (canvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         new LetterGlitch(canvas, { glitchSpeed: 400, smooth: false });
       }
-      
+
       const welcomeText = document.getElementById("welcome-text");
       const subtitleText = document.getElementById("subtitle-text");
-      
+
       setTimeout(() => {
         new SplitTextAnimation(welcomeText, {
-          delay: 40,
-          duration: 0.6,
-          ease: "power3.out",
+          delay: 40, duration: 0.6, ease: "power3.out",
           from: { opacity: 0, y: 60, rotationX: -90 },
-          to: { opacity: 1, y: 0, rotationX: 0 },
+          to:   { opacity: 1, y: 0,  rotationX: 0 }
         });
       }, 300);
-      
+
       setTimeout(() => {
         new SplitTextAnimation(subtitleText, {
-          delay: 25,
-          duration: 0.5,
-          ease: "power2.out",
+          delay: 25, duration: 0.5, ease: "power2.out",
           from: { opacity: 0, y: 40, scale: 0.92 },
-          to: { opacity: 1, y: 0, scale: 1 },
+          to:   { opacity: 1, y: 0,  scale: 1 }
         });
       }, 650);
     });
