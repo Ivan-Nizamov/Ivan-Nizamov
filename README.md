@@ -5,35 +5,37 @@ This repository contains a clean, organized personal website with multiple sub-s
 ## Repository Structure
 
 ```
-├── README.md                    # This file
-├── generate_sites.py           # Master script to generate all sites
-├── generate                    # Simple wrapper script
-├── Makefile                    # Make targets for common tasks
-├── shell.nix                   # Nix shell environment
-├── index.html                  # Main site (root, copied from main/)
-├── resume.pdf                  # Main site resume (copied from main/)
+├── 01-08-2025/                 # Sub-site directory
+│   ├── index.html
+│   ├── resume.tex
+│   ├── resume.pdf
+│   └── qr_code.png           # QR code pointing to /01-08-2025
+├── 03-08-2025/                 # Sub-site directory  
+│   ├── index.html
+│   ├── resume.tex
+│   ├── resume.pdf
+│   └── qr_code.png           # QR code pointing to /03-08-2025
 ├── fonts/                      # Shared Manrope font files
 │   ├── static/                 # TTF font files
 │   │   ├── Manrope-Regular.ttf
 │   │   ├── Manrope-Bold.ttf
 │   │   └── ...
 │   └── Manrope.zip            # Original font archive
-├── main/                      # Root site files
-│   ├── index.html
-│   ├── resume.tex
-│   ├── resume.pdf
-│   └── qr_code.png           # QR code pointing to ivan-nizamov.github.io
-└── h6Eb9x2Qk7nM4pL8vR3tY/    # Sub-site
-    ├── index.html
-    ├── resume.tex
-    ├── resume.pdf
-    └── qr_code.png           # QR code pointing to sub-site URL
+├── generate                    # Simple wrapper script to generate all sites
+├── generate_sites.py           # Master script to generate all sites
+├── index.html                  # Main site (root)
+├── Makefile                    # Make targets for common tasks
+├── README.md                   # This file
+├── resume.pdf                  # Main site resume
+├── serve                       # Simple script to start local dev server
+└── shell.nix                   # Nix shell environment
 ```
 
 ## URLs
 
 - **Main site**: https://ivan-nizamov.github.io
-- **Sub-site**: https://ivan-nizamov.github.io/h6Eb9x2Qk7nM4pL8vR3tY
+- **Sub-site 1**: https://ivan-nizamov.github.io/01-08-2025
+- **Sub-site 2**: https://ivan-nizamov.github.io/03-08-2025
 
 ## Features
 
@@ -84,7 +86,7 @@ To add a new sub-site:
 
 1. Create a new directory with your desired URL path name:
    ```bash
-   cp -r h6Eb9x2Qk7nM4pL8vR3tY new-site-name
+   cp -r 01-08-2025 new-site-name
    ```
 
 2. Edit the files in the new directory:
@@ -94,7 +96,7 @@ To add a new sub-site:
 
 3. Run the generation script - it will automatically discover your new directory:
    ```bash
-   nix-shell -p python3 python3Packages.qrcode python3Packages.pillow --run "python3 generate_sites.py"
+   ./generate
    ```
 
 4. The new site will be available at `https://ivan-nizamov.github.io/new-site-name`
@@ -110,6 +112,16 @@ cd site-directory
 nix-shell -p texlive.combined.scheme-full --run "xelatex resume.tex"
 ```
 
+### Local Development Server
+
+To start a local development server:
+
+```bash
+./serve
+```
+
+This will start a server at http://localhost:8000 where you can preview your site before pushing to GitHub Pages.
+
 ## Dependencies
 
 - **NixOS/Nix**: For reproducible builds
@@ -119,8 +131,9 @@ nix-shell -p texlive.combined.scheme-full --run "xelatex resume.tex"
 
 ## Notes
 
-- All resumes use the same content but have different QR codes pointing to their specific URLs
-- The main site files (index.html and resume.pdf) are copied to the root directory for GitHub Pages compatibility
+- Each site directory is self-contained with its own resume, QR code, and HTML content
+- The main site no longer exists as a separate directory - the root files serve as the main site
 - LaTeX compilation uses XeLaTeX to support the Manrope font via fontspec package
 - QR codes are generated with high error correction for better scanning reliability
-- The website text has been updated from "Portfolio Website" to "Personal Website" throughout all files
+- Site directories can use any naming convention and will be automatically discovered
+- The `serve` script provides a quick way to preview changes locally before deploying
