@@ -13,7 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <style>
-    :root { --accent: #2ad6ff; }
+    :root { --accent: #fdfcff; }
 
     html, body { height: 100%; }
     body {
@@ -34,9 +34,9 @@
     #letter-glitch-bg {
       position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #1b3565;
     }
-    #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 0.6; filter: blur(0.8px); }
+    #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 0.85; filter: blur(0.3px); }
     .center-vignette { position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(rgba(253, 252, 255, 0) 0%, rgba(27, 53, 101, 0.9) 70%);
+      background: radial-gradient(rgba(253, 252, 255, 0) 0%, rgba(27, 53, 101, 0.7) 80%);
     }
 
     .content-container {
@@ -44,8 +44,25 @@
       text-align: center; gap: 1rem;
       width: 100%; max-width: 44rem;
       padding: 2rem 1.25rem;
-      background: rgba(27,53,101,0.45); backdrop-filter: blur(10px);
-      border-radius: 1rem; border: 1px solid rgba(55,115,237,0.2);
+      background: linear-gradient(135deg, rgba(27,53,101,0.85) 0%, rgba(55,115,237,0.4) 50%, rgba(42,214,255,0.85) 100%);
+      backdrop-filter: blur(15px) saturate(1.2);
+      border-radius: 1rem; 
+      border: 1px solid rgba(253,252,255,0.3);
+      box-shadow: 0 8px 32px 0 rgba(42,214,255,0.3), inset 0 0 32px rgba(253,252,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .content-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(253,252,255,0.1) 0%, transparent 50%, rgba(42,214,255,0.1) 100%);
+      border-radius: 1rem;
+      pointer-events: none;
     }
 
     /* Headings */
@@ -73,7 +90,7 @@
     /* Mobile optimizations */
     @media (max-width: 768px) {
       .content-container { gap: 1.1rem; padding: 1.5rem 1rem; }
-      #glitch-canvas { opacity: .5; filter: blur(1px); } /* calmer background on phones */
+      #glitch-canvas { opacity: .7; filter: blur(0.5px); } /* calmer background on phones */
     }
     @media (max-width: 420px) {
       .content-container { max-width: 98vw; padding: 1.25rem .85rem; }
@@ -99,7 +116,7 @@
     <div class="flex flex-col gap-0 w-full max-w-sm mx-auto relative z-10">
       <a href="resume.pdf" download>
         <button
-          class="group relative w-full p-3 sm:p-4 backdrop-blur-xl border-2 border-[#2ad6ff]/30 bg-gradient-to-br from-[#3773ed]/20 via-[#1b3565]/60 to-[#1b3565]/80 shadow-2xl hover:shadow-[#2ad6ff]/30 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-[#2ad6ff]/60 overflow-hidden"
+          class="group relative w-full p-3 sm:p-4 backdrop-blur-xl border-2 border-[#2ad6ff]/40 bg-gradient-to-br from-[#3773ed]/15 via-[#1b3565]/40 to-[#1b3565]/60 shadow-2xl hover:shadow-[#2ad6ff]/40 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-[#2ad6ff]/70 overflow-hidden"
           style="border-radius: 1rem;"
           aria-label="Download Resume as PDF"
         >
@@ -139,13 +156,13 @@
       constructor(canvas, options = {}) {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
-        this.glitchColors = options.glitchColors || ["#3773ed", "#1b3565", "#2ad6ff"];
+        this.glitchColors = options.glitchColors || ["#2ad6ff", "#3773ed", "#fdfcff"];
         this.glitchSpeed = options.glitchSpeed || 100;
         this.smooth = options.smooth ?? false;
 
-        this.fontSize = 24;
-        this.charWidth = 26;
-        this.charHeight = 36;
+        this.fontSize = 28;
+        this.charWidth = 30;
+        this.charHeight = 42;
 
         this.letters = [];
         this.grid = { columns: 0, rows: 0 };
@@ -155,9 +172,12 @@
         this.drawH = 0;
 
         this.lettersAndSymbols = [
-          ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-          ..."!@#$&*()-_+=/[]{};:<>,".split(""),
           ..."0123456789",
+          ..."0123456789",
+          ..."0123456789",
+          ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          ..."+-*/=<>≤≥±∞π√∑∏∫∂Δ".split(""),
+          ..."αβγδεζηθικλμνξοπρστυφχψω".split(""),
         ];
         this.init();
       }
@@ -300,7 +320,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       const canvas = document.getElementById("glitch-canvas");
       if (canvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        new LetterGlitch(canvas, { glitchSpeed: 400, smooth: false });
+        new LetterGlitch(canvas, { glitchSpeed: 300, smooth: false });
       }
 
       const welcomeText = document.getElementById("welcome-text");

@@ -13,12 +13,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <style>
-    :root { --accent: #fcd34d; }
+    :root { --accent: #f5a341; }
 
     html, body { height: 100%; }
     body {
       margin: 0;
-      background: #000;
+      background: #18090e;
       color: #fff;
       display: grid;
       place-items: center;
@@ -32,9 +32,9 @@
 
     /* Background */
     #letter-glitch-bg {
-      position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #000;
+      position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #18090e;
     }
-    #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 1; filter: blur(0.6px); }
+    #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 0.85; filter: blur(0.3px); }
     .center-vignette { position: absolute; inset: 0; pointer-events: none;
       background: radial-gradient(rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 70%);
     }
@@ -44,8 +44,25 @@
       text-align: center; gap: 1rem;
       width: 100%; max-width: 44rem;
       padding: 2rem 1.25rem;
-      background: rgba(0,0,0,0.45); backdrop-filter: blur(10px);
-      border-radius: 1rem; border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(135deg, rgba(24,9,14,0.85) 0%, rgba(0,0,0,0.75) 50%, rgba(24,9,14,0.9) 100%);
+      backdrop-filter: blur(15px) saturate(1.2);
+      border-radius: 1rem; 
+      border: 1px solid rgba(245,163,65,0.15);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4), inset 0 0 24px rgba(245,163,65,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .content-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(245,163,65,0.08) 0%, transparent 50%, rgba(245,163,65,0.03) 100%);
+      border-radius: 1rem;
+      pointer-events: none;
     }
 
     /* Headings */
@@ -73,7 +90,7 @@
     /* Mobile optimizations */
     @media (max-width: 768px) {
       .content-container { gap: 1.1rem; padding: 1.5rem 1rem; }
-      #glitch-canvas { opacity: .8; filter: blur(0.8px); } /* calmer background on phones */
+      #glitch-canvas { opacity: .7; filter: blur(0.5px); } /* calmer background on phones */
     }
     @media (max-width: 420px) {
       .content-container { max-width: 98vw; padding: 1.25rem .85rem; }
@@ -99,31 +116,31 @@
     <div class="flex flex-col gap-0 w-full max-w-sm mx-auto relative z-10">
       <a href="resume.pdf" download>
         <button
-          class="group relative w-full p-3 sm:p-4 backdrop-blur-xl border-2 border-blue-500/30 bg-gradient-to-br from-blue-900/40 via-slate-900/60 to-black/80 shadow-2xl hover:shadow-blue-500/30 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-blue-400/60 overflow-hidden"
+          class="group relative w-full p-3 sm:p-4 backdrop-blur-xl border-2 border-orange-500/30 bg-gradient-to-br from-pink-900/40 via-slate-900/60 to-black/80 shadow-2xl hover:shadow-orange-500/30 hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 active:scale-95 transition-all duration-500 ease-out cursor-pointer hover:border-orange-400/60 overflow-hidden"
           style="border-radius: 1rem;"
           aria-label="Download Resume as PDF"
         >
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-blue-400/20 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="border-radius: 1rem;"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-orange-400/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-pink-400/20 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style="border-radius: 1rem;"></div>
           <div class="relative z-10 flex items-center gap-3 sm:gap-4">
-            <div class="p-2 sm:p-3 bg-gradient-to-br from-blue-500/30 to-blue-600/10 backdrop-blur-sm group-hover:from-blue-400/40 group-hover:to-blue-500/20 transition-all duration-300" style="border-radius: 1rem;">
+            <div class="p-2 sm:p-3 bg-gradient-to-br from-orange-500/30 to-pink-600/10 backdrop-blur-sm group-hover:from-orange-400/40 group-hover:to-pink-500/20 transition-all duration-300" style="border-radius: 1rem;">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   class="w-6 h-6 sm:w-7 sm:h-7 fill-current text-blue-400 group-hover:text-blue-300 transition-all duration-300 group-hover:scale-110 drop-shadow-lg"
+                   class="w-6 h-6 sm:w-7 sm:h-7 fill-current text-orange-400 group-hover:text-orange-300 transition-all duration-300 group-hover:scale-110 drop-shadow-lg"
                    role="img" aria-hidden="true">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path>
               </svg>
             </div>
             <div class="flex-1 text-left">
-              <p class="text-blue-400 font-bold text-base sm:text-lg group-hover:text-blue-300 transition-colors duration-300 drop-shadow-sm">
+              <p class="text-orange-400 font-bold text-base sm:text-lg group-hover:text-orange-300 transition-colors duration-300 drop-shadow-sm">
                 Resume
               </p>
-              <p class="text-blue-300/60 text-xs sm:text-sm group-hover:text-blue-200/80 transition-colors duration-300">
+              <p class="text-orange-300/60 text-xs sm:text-sm group-hover:text-orange-200/80 transition-colors duration-300">
                 Download PDF
               </p>
             </div>
             <div class="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
-              <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" aria-hidden="true">
+              <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" class="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" aria-hidden="true">
                 <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
@@ -139,13 +156,13 @@
       constructor(canvas, options = {}) {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
-        this.glitchColors = options.glitchColors || ["#8A2B1F", "#91775B", "#2B4876"];
+        this.glitchColors = options.glitchColors || ["#f5a341", "#fb923c", "#f97316", "#ea580c", "#fdba74"];
         this.glitchSpeed = options.glitchSpeed || 100;
         this.smooth = options.smooth ?? false;
 
-        this.fontSize = 24;
-        this.charWidth = 26;
-        this.charHeight = 36;
+        this.fontSize = 28;
+        this.charWidth = 30;
+        this.charHeight = 42;
 
         this.letters = [];
         this.grid = { columns: 0, rows: 0 };
