@@ -1,0 +1,120 @@
+% Compile with: pdflatex (or xelatex if you prefer)
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc} % for UTF-8 (ă, ș, ț)
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.7cm]{geometry}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{iftex}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black
+}
+
+% ------- Formatting -------
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\familydefault}{\sfdefault}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\bfseries}{}{0em}{}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% Compact lists
+\setlist[itemize]{leftmargin=1.2em, itemsep=2pt, topsep=2pt}
+\setlist[description]{leftmargin=1.4em, itemsep=2pt, topsep=2pt}
+
+% ------- Document -------
+\begin{document}
+
+% Header with integrated QR code
+\begin{minipage}[t]{0.75\textwidth}
+\vspace{0pt}
+{\LARGE \textbf{Ivan Nizamov}}\hfill \textit{Aspiring IT Specialist}\\
+Timișoara, Romania \quad|\quad +40 738 030 141 \quad|\quad \href{mailto:ivan.nizamov@proton.me}{ivan.nizamov@proton.me}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.22\textwidth}
+\vspace{0pt}
+\begin{center}
+% Include QR code if it exists, otherwise leave blank
+\IfFileExists{qr_code.png}{
+  \includegraphics[width=0.8in]{qr_code.png}\\[2pt]
+  \footnotesize\textit{Personal Website}
+}{
+  \IfFileExists{./qr_code.png}{
+    \includegraphics[width=0.8in]{./qr_code.png}\\[2pt]
+    \footnotesize\textit{Personal Website}
+  }{
+    % Placeholder if no QR code found
+    \fbox{\parbox{0.8in}{\centering\vspace{0.3in}QR Code\\Not Found\vspace{0.3in}}}\\[2pt]
+    \footnotesize\textit{Personal Website}
+  }
+}
+\end{center}
+\end{minipage}
+
+\section*{Profile}
+Student (graduating 2026) with a strong IT foundation and a growing focus on product quality. Comfortable planning and executing web/mobile test passes, comparing UI against Figma, logging repro steps in Asana, and using DevTools/Postman to sanity-check APIs and responses. Background in device setup, inventory reconciliation, and building stable, reproducible environments—habits I apply to structured test cases, checklists, and clean bug reports. Currently expanding cross-browser/platform testing, accessibility checks, and light automation (Python/Playwright) to increase coverage; B2 English with concise written communication.
+
+\section*{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}p{3.1cm}Y@{}}
+\textbf{Systems} & Windows 10/11; Ubuntu/Debian; NixOS (declarative setups) \\
+\textbf{Scripting \& Tools} & Python; Bash/PowerShell; Git/GitHub (basic); REST/JSON concepts; Jupyter (beginner) \\
+\textbf{Data \& Docs} & Excel/Google Sheets (lookups, pivots, charts); structured runbooks; issue tracking \\
+\textbf{Hardware/Infra} & SBCs (Raspberry Pi); device setup/monitoring; safe diagnostics/ESD handling \\
+\end{tabularx}
+
+\section*{Experience}
+\textbf{Volunteer}, Plan Zero (NGO) --- Timișoara \hfill \textit{Jul 2023 -- Nov 2024}\\
+\begin{itemize}
+  \item Helped deploy/maintain a large 3D-printer fleet; individually calibrated $\sim$40 devices to reduce failures.
+  \item Reconciled inventory ($\sim$80 items), flagged anomalies, and logged defect trends for leads.
+  \item Delivered clear status updates and followed safety/ESD protocols.
+\end{itemize}
+
+\textbf{Independent Tech Support} --- Timișoara \hfill \textit{2022 -- Present}\\
+\begin{itemize}
+  \item Installed/reinstalled Windows/Linux on $\sim$8 systems; wrote repeatable step-by-step notes.
+  \item Performed $\sim$3 data-recovery cases (bootloaders, file systems); validated outcomes with users.
+  \item Replaced RAM/SSD/batteries on $\sim$6 laptops/desktops; communicated findings and next actions.
+\end{itemize}
+
+\textbf{Tech Assistant}, Creative Collaboration (``Nadayana'') \hfill \textit{2022 -- Present}\\
+\begin{itemize}
+  \item Organized/backup multimedia assets with clear naming and folder conventions.
+  \item Assembled a microcontroller-based sampler using 3D-printed parts; documented build/test procedure.
+\end{itemize}
+
+\section*{Projects}
+\textbf{3D Print Farm Ops (Raspberry Pi 5)} --- Remote job control/monitoring (3 printers + webcams); tracked throughput and interventions to improve uptime and predictability.\\
+\textbf{NixOS Automation} --- Declarative configs for fast, reproducible environments; versioned changes for safe rollback and consistent tooling.
+
+\section*{Education}
+\textbf{High School Diploma (in progress)} --- Colegiul Tehnic Emanuil Ungureanu, Timișoara \hfill \textit{Expected 2026}\\
+Median 9.78/10 (Year 11). Ongoing self-study: OS fundamentals, scripting, troubleshooting, basic SQL/statistics.
+
+\section*{Certifications \textnormal{(in progress)}}
+\begin{itemize}
+  \item ISTQB\textsuperscript{\textregistered} Certified Tester --- Foundation Level (testing principles, coverage, defect lifecycle)
+  \item Postman Student Expert (API requests, environments, collections, basic assertions)
+  \item W3C/WAI Web Accessibility Introduction (a11y fundamentals, contrast, focus order, alt text)
+  \item GDPR Data Protection Essentials (EU) (privacy by design, data handling for user-facing apps)
+  \item Playwright Testing 101 (Microsoft Learn) (record \& clean a simple smoke flow, headless basics)
+  \item Salesforce Administrator (Trailhead) (CRM objects, flows, reports/dashboards) % diversified, adjacent to ops
+\end{itemize}
+
+\section*{Additional}
+Languages: Russian, Romanian; English (B2).\\
+Availability: Full-time; remote or hybrid in Timișoara.\\
+
+\end{document}

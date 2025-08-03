@@ -3,11 +3,16 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     python3
+    python3Packages.qrcode
+    python3Packages.pillow
+    texlive.combined.scheme-full
   ];
-  
+
   shellHook = ''
-    echo "Starting local development server..."
-    echo "Run: python3 -m http.server 8000"
-    echo "Then open: http://localhost:8000"
+    echo "Personal Website Generator Environment"
+    echo "Run 'python3 generate_sites.py' to generate all sites"
+    echo "Or use the 'generate' alias"
+    
+    alias generate="python3 generate_sites.py"
   '';
 }
