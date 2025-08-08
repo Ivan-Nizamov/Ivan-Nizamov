@@ -25,15 +25,12 @@
       min-height: 100svh;
       overflow-x: hidden;
       font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      /* respect notches/safe areas on mobile */
       padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
                max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
     }
 
     /* Background */
-    #letter-glitch-bg {
-      position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #1b3565;
-    }
+    #letter-glitch-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #1b3565; }
     #glitch-canvas { width: 100%; height: 100%; display: block; opacity: 0.85; filter: blur(0.3px); }
     .center-vignette { position: absolute; inset: 0; pointer-events: none;
       background: radial-gradient(rgba(253, 252, 255, 0) 0%, rgba(27, 53, 101, 0.7) 80%);
@@ -52,54 +49,63 @@
       position: relative;
       overflow: hidden;
     }
-    
     .content-container::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(253,252,255,0.1) 0%, transparent 50%, rgba(42,214,255,0.1) 100%);
-      border-radius: 1rem;
-      pointer-events: none;
+      border-radius: 1rem; pointer-events: none;
     }
 
     /* Headings */
     .welcome-text, .subtitle {
-      margin: 0;
-      font-weight: 800;
-      line-height: 1.15;
-      color: var(--accent);
-      opacity: 0; visibility: hidden; /* revealed by JS */
-      /* Better mobile line breaks */
-      text-wrap: balance;            /* modern browsers */
-      word-break: normal;
-      overflow-wrap: normal;
-      hyphens: auto;
-      letter-spacing: -0.01em;
+      margin: 0; font-weight: 800; line-height: 1.15; color: var(--accent);
+      opacity: 0; visibility: hidden; text-wrap: balance; word-break: normal; overflow-wrap: normal;
+      hyphens: auto; letter-spacing: -0.01em;
     }
     .welcome-text { font-size: clamp(1.4rem, 8vw, 3.25rem); }
     .subtitle     { font-weight: 700; font-size: clamp(0.95rem, 4.5vw, 1.25rem); margin-top: .25rem; }
 
-    /* Per-word wrapper created by JS so words don't split mid-word */
-    .word { display: inline-block; white-space: nowrap; } /* allows wrapping *between* words only */
-
-    a { text-decoration: none; }
+    /* Per-word wrapper */
+    .word { display: inline-block; white-space: nowrap; }
 
     /* Mobile optimizations */
     @media (max-width: 768px) {
       .content-container { gap: 1.1rem; padding: 1.5rem 1rem; }
-      #glitch-canvas { opacity: .7; filter: blur(0.5px); } /* calmer background on phones */
+      #glitch-canvas { opacity: .7; filter: blur(0.5px); }
     }
     @media (max-width: 420px) {
       .content-container { max-width: 98vw; padding: 1.25rem .85rem; }
       .welcome-text { font-size: clamp(1.2rem, 9.5vw, 2.1rem); }
       .subtitle     { font-size: clamp(0.9rem, 4.5vw, 1.1rem); }
     }
+    @media (prefers-reduced-motion: reduce) { .welcome-text, .subtitle { animation: none; } }
 
-    @media (prefers-reduced-motion: reduce) {
-      .welcome-text, .subtitle { animation: none; }
+    /* === QR badge === */
+    .qr-badge {
+      position: absolute; right: 0.9rem; bottom: 0.9rem;
+      display: flex; align-items: center; gap: .75rem;
+      padding: .6rem .7rem;
+      background: linear-gradient(135deg, rgba(27,53,101,0.75), rgba(55,115,237,0.35));
+      border: 1px solid rgba(42,214,255,.35);
+      border-radius: .85rem;
+      backdrop-filter: blur(10px) saturate(1.1);
+      box-shadow: 0 8px 24px rgba(42,214,255,.25), inset 0 0 24px rgba(253,252,255,.06);
+    }
+    .qr-badge img {
+      width: clamp(72px, 11vw, 112px); height: auto; display: block; border-radius: .5rem;
+      box-shadow: 0 0 0 6px rgba(27,53,101, .65), inset 0 0 0 1px rgba(42,214,255,.4);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .qr-badge:hover img { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 0 6px rgba(27,53,101,.8), inset 0 0 0 1px rgba(42,214,255,.7); }
+    .qr-text { text-align: right; }
+    .qr-text .kicker { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(42,214,255,.8); font-weight: 700; }
+    .qr-text .title  { font-size: .9rem; font-weight: 800; color: var(--accent); opacity: .95; }
+
+    /* Mobile: center under the button */
+    @media (max-width: 640px) {
+      .qr-badge { position: static; margin-top: .75rem; align-self: center; }
+      .qr-text { display: none; } /* keep it clean on phones */
+      .qr-badge img { width: 96px; }
     }
   </style>
 </head>
@@ -148,6 +154,18 @@
         </button>
       </a>
     </div>
+
+    <!-- === QR code badge (scan or click) === -->
+    <div class="qr-badge" aria-label="Scan to download my resume to your phone">
+      <div class="qr-text">
+        <div class="kicker">Scan to save</div>
+        <div class="title">Resume (PDF)</div>
+      </div>
+      <a href="resume.pdf" download title="Download resume PDF">
+        <img src="resume_qr_code.png" alt="QR code to download resume PDF" loading="lazy">
+      </a>
+    </div>
+    <!-- === /QR code badge === -->
   </div>
 
   <script>
@@ -172,9 +190,7 @@
         this.drawH = 0;
 
         this.lettersAndSymbols = [
-          ..."0123456789",
-          ..."0123456789",
-          ..."0123456789",
+          ..."0123456789","...0123456789","...0123456789",
           ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
           ..."+-*/=<>≤≥±∞π√∑∏∫∂Δ".split(""),
           ..."αβγδεζηθικλμνξοπρστυφχψω".split(""),
@@ -261,7 +277,6 @@
         this.timeline = null;
         this.init();
       }
-      /* Wrap each *word* in a container; animate chars inside it */
       splitText() {
         const t = this.text;
         this.element.innerHTML = "";
@@ -269,19 +284,15 @@
         this.element.style.visibility = "visible";
 
         const frag = document.createDocumentFragment();
-        const tokens = t.split(/(\s+)/); // keep spaces as tokens
-
+        const tokens = t.split(/(\s+)/);
         tokens.forEach(token => {
           if (token.trim() === "") {
-            // Preserve spaces/newlines
             frag.appendChild(document.createTextNode(token));
           } else {
-            // Word wrapper prevents mid-word breaks
             const word = document.createElement("span");
             word.className = "word";
             word.style.display = "inline-block";
             word.style.whiteSpace = "nowrap";
-
             for (let i = 0; i < token.length; i++) {
               const span = document.createElement("span");
               span.textContent = token[i];
@@ -294,7 +305,6 @@
             frag.appendChild(word);
           }
         });
-
         this.element.appendChild(frag);
       }
       animate() {
