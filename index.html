@@ -1,371 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Personal Website | Welcome</title>
-
-  <!-- Fonts & Libraries -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-  <style>
-    :root{
-      --accent:#fdfcff; --bg:#0f244a; --bg2:#1b3565; --c1:#2ad6ff; --c2:#3773ed;
-    }
-
-    html,body{height:100%}
-    body{
-      margin:0; background:var(--bg2); color:var(--accent);
-      display:grid; place-items:center; min-height:100svh; overflow-x:hidden;
-      font-family:"Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      padding:max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right))
-              max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left));
-    }
-
-    /* Background */
-    #letter-glitch-bg{position:fixed; inset:0; z-index:-1; overflow:hidden; background:var(--bg2)}
-    #glitch-canvas{width:100%; height:100%; display:block; opacity:.85; filter:blur(.3px)}
-    .center-vignette{position:absolute; inset:0; pointer-events:none;
-      background:radial-gradient(rgba(253,252,255,0) 0%, rgba(27,53,101,.7) 80%)}
-
-    /* Card shell */
-    .card{
-      width:min(1100px, 96vw);
-      padding:clamp(1.25rem, 3vw, 2rem);
-      border-radius:1.25rem;
-      background:
-        linear-gradient(135deg, rgba(27,53,101,.88), rgba(55,115,237,.45) 55%, rgba(42,214,255,.88));
-      border:1px solid rgba(253,252,255,.28);
-      backdrop-filter:blur(14px) saturate(1.15);
-      box-shadow:0 16px 48px rgba(0,0,0,.35), 0 10px 32px rgba(42,214,255,.22) inset;
-      position:relative; overflow:hidden;
-    }
-    .card::before{
-      content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
-      background:linear-gradient(135deg, rgba(253,252,255,.08), transparent 40%, rgba(42,214,255,.1));
-    }
-
-    /* Grid layout */
-    .grid{
-      display:grid; align-items:center;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap:clamp(1rem, 3.5vw, 2.25rem);
-    }
-    @media (max-width: 900px){
-      .grid{ grid-template-columns: 1fr; text-align:center; }
-    }
-
-    /* Left column: text */
-    .headline{
-      margin:0;
-      font-weight:900;
-      line-height:1.08;
-      letter-spacing:-.02em;
-      color:var(--accent);
-      font-size:clamp(2rem, 5.8vw, 3.6rem);
-      opacity:0; visibility:hidden;
-      text-wrap:balance;
-    }
-    .sub{
-      margin:.5rem 0 0;
-      font-weight:700; opacity:.95; color:var(--accent);
-      font-size:clamp(1rem, 2.8vw, 1.2rem);
-      opacity:0; visibility:hidden;
-    }
-    .word{display:inline-block; white-space:nowrap}
-
-    /* Right column: actions */
-    .actions{
-      display:flex; flex-direction:column; gap:clamp(.9rem, 2.2vw, 1.2rem);
-      align-items:stretch; justify-content:center;
-    }
-    .download-btn{
-      border-radius:1rem;
-      padding:clamp(.9rem, 2.5vw, 1.1rem) clamp(1rem, 3vw, 1.25rem);
-      border:2px solid rgba(42,214,255,.45);
-      background:linear-gradient(135deg, rgba(55,115,237,.18), rgba(27,53,101,.5) 60%, rgba(27,53,101,.7));
-      box-shadow:0 12px 28px rgba(0,0,0,.25);
-      display:flex; align-items:center; justify-content:space-between; gap:.75rem;
-      transition:transform .18s ease, border-color .2s ease, box-shadow .2s ease;
-      cursor:pointer;
-    }
-    .download-btn:hover{ transform:translateY(-1px); border-color:rgba(42,214,255,.75); box-shadow:0 16px 36px rgba(0,0,0,.32) }
-    .btn-left{ display:flex; gap:.8rem; align-items:center; text-align:left }
-    .btn-title{ font-weight:800; color:var(--accent); font-size:clamp(1rem, 2.8vw, 1.15rem) }
-    .btn-sub{ font-size:.9rem; opacity:.8 }
-
-    /* QR row */
-    .qr-row{
-      display:flex; align-items:center; gap:.9rem; justify-content:flex-start;
-    }
-    .qr-chip{
-      display:flex; align-items:center; gap:.75rem;
-      padding:.6rem .7rem; border-radius:1rem;
-      background:linear-gradient(135deg, rgba(27,53,101,.72), rgba(55,115,237,.35));
-      border:1px solid rgba(42,214,255,.4);
-      backdrop-filter:blur(10px) saturate(1.1);
-      box-shadow:0 8px 24px rgba(42,214,255,.22), inset 0 0 24px rgba(253,252,255,.06);
-      cursor:pointer; transition:transform .15s ease, border-color .2s ease;
-    }
-    .qr-chip:hover{ transform:translateY(-1px); border-color:rgba(42,214,255,.7) }
-    .qr-copy{line-height:1.1}
-    .qr-copy .kicker{ font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(42,214,255,.85); font-weight:800 }
-    .qr-copy .title{ font-weight:900; color:var(--accent); }
-    .qr-img{ width:clamp(84px, 12vw, 128px); aspect-ratio:1; border-radius:.75rem;
-      box-shadow:0 0 0 6px rgba(27,53,101,.6), inset 0 0 0 1px rgba(42,214,255,.45) }
-
-    @media (max-width:900px){
-      .qr-row{ justify-content:center }
-    }
-    @media (max-width:640px){
-      .qr-copy{ display:none }              /* keep it minimal on phones */
-      .qr-img{ width:120px }               /* bigger target on mobile */
-    }
-
-    /* Modal */
-    .qr-modal{ position:fixed; inset:0; display:none; place-items:center; z-index:50 }
-    .qr-modal[data-open="true"]{ display:grid }
-    .qr-backdrop{ position:absolute; inset:0; background:rgba(6,14,28,.6); backdrop-filter:blur(2px) }
-    .qr-panel{
-      position:relative; z-index:1; width:min(92vw, 28rem); padding:1rem 1rem 1.25rem;
-      border-radius:1rem;
-      background:linear-gradient(135deg, rgba(27,53,101,.94), rgba(55,115,237,.6));
-      border:1px solid rgba(42,214,255,.45); box-shadow:0 12px 40px rgba(0,0,0,.45);
-      display:flex; flex-direction:column; align-items:center; gap:.9rem;
-    }
-    .qr-big{ width:min(70vw, 18rem); aspect-ratio:1; border-radius:.75rem;
-      box-shadow:0 0 0 10px rgba(27,53,101,.75), inset 0 0 0 1px rgba(42,214,255,.6) }
-    .qr-actions{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center }
-    .btn{
-      display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem; border-radius:.75rem;
-      background:linear-gradient(135deg, rgba(55,115,237,.2), rgba(42,214,255,.2));
-      border:1px solid rgba(42,214,255,.5); text-decoration:none; color:var(--accent); font-weight:800;
-      transition:transform .15s ease, border-color .2s ease;
-    }
-    .btn:hover{ transform:translateY(-1px); border-color:rgba(42,214,255,.75) }
-    .close-x{ position:absolute; top:.45rem; right:.55rem; background:transparent; border:none; color:var(--accent); font-size:1.35rem; line-height:1; cursor:pointer; opacity:.8 }
-    .close-x:hover{ opacity:1 }
-
-    /* Print: clean, with QR visible */
-    @media print{
-      body{ background:#fff }
-      #letter-glitch-bg{ display:none !important }
-      .card{ box-shadow:none; border:1px solid #ddd }
-      .qr-img{ width:150px; box-shadow:none }
-    }
-
-    @media (max-width:768px){ #glitch-canvas{opacity:.7; filter:blur(.5px)} }
-    @media (prefers-reduced-motion:reduce){ .headline,.sub{ animation:none } }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Welcome to my personal website</title>
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preload" as="image" href="assets/placeholder-face.svg">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Background -->
-  <div id="letter-glitch-bg" aria-hidden="true">
-    <canvas id="glitch-canvas"></canvas>
-    <div class="center-vignette"></div>
-  </div>
+  <canvas id="bg" aria-hidden="true"></canvas>
 
-  <!-- Main card -->
-  <section class="card">
-    <div class="grid">
-      <!-- Left: copy -->
-      <header>
-        <h1 id="hero" class="headline">Welcome to my personal website!</h1>
-        <p id="sub" class="sub">⚠️ This site is currently being rewritten… ⚠️</p>
-      </header>
+  <main class="shell">
+    <section class="grid">
+      <!-- HERO -->
+      <article class="tile hero">
+        <h1>Welcome to my personal website!</h1>
+        <p class="sub">
+          <span aria-hidden="true">⚠️</span>
+          <strong>Undergoing a rewrite.</strong> Thanks for visiting.
+        </p>
+      </article>
 
-      <!-- Right: actions -->
-      <div class="actions">
-        <a class="download-btn" href="resume.pdf" download aria-label="Download resume as PDF">
-          <div class="btn-left">
-            <span class="p-2 rounded-xl bg-[rgba(42,214,255,.25)]/50 border border-[rgba(42,214,255,.35)]">
-              <!-- icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   class="w-6 h-6 fill-current text-[var(--c1)]" aria-hidden="true">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/>
-              </svg>
-            </span>
+      <!-- DOWNLOAD TILE -->
+      <article class="tile cta">
+        <div class="stack">
+          <div class="cta-header">
+            <div class="icon">⬇️</div>
             <div>
-              <div class="btn-title">Download Resume</div>
-              <div class="btn-sub">PDF · fast & lightweight</div>
+              <h2>Download Resume</h2>
+              <p class="muted">PDF · fast & lightweight</p>
             </div>
+            <a class="chev" href="resume.pdf" download aria-label="Download resume">›</a>
           </div>
-          <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" class="w-5 h-5 opacity-70" aria-hidden="true">
-            <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-          </svg>
-        </a>
-
-        <div class="qr-row">
-          <div id="qrChip" class="qr-chip" role="button" tabindex="0"
-               aria-label="Open large QR to download my resume" aria-haspopup="dialog" aria-controls="qrModal">
-            <div class="qr-copy">
-              <div class="kicker">Scan to save</div>
-              <div class="title">Resume (PDF)</div>
-            </div>
-            <img class="qr-img" src="resume_qr_code.png" alt="QR code for resume.pdf" loading="eager" decoding="async">
-          </div>
-          <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Open in browser</a>
+          <a class="btn" href="resume.pdf" download>
+            Download PDF
+          </a>
         </div>
-      </div>
-    </div>
-  </section>
+      </article>
 
-  <!-- Modal (large QR) -->
-  <div id="qrModal" class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
-    <div class="qr-backdrop" data-close></div>
-    <div class="qr-panel">
-      <button class="close-x" type="button" data-close aria-label="Close">×</button>
-      <h3 id="qrModalTitle" style="margin:.25rem 0 .25rem; font-weight:900">Scan to get my resume</h3>
-      <img class="qr-big" src="resume_qr_code.png" alt="Large QR code to download resume.pdf">
-      <div class="qr-actions">
-        <a class="btn" href="resume.pdf" download>⬇ Download PDF</a>
-        <a class="btn" href="resume.pdf" target="_blank" rel="noopener">↗ Open in browser</a>
-      </div>
-      <p style="font-size:.8rem; opacity:.85; margin:.3rem 0 0;">Tip: long-press the QR to save it.</p>
-    </div>
-  </div>
+      <!-- QR TILE -->
+      <article class="tile qr">
+        <div class="qr-left">
+          <small>SCAN TO</small>
+          <div class="qr-caption">
+            <strong>Save</strong> Resume<br>(PDF)
+          </div>
+          <a class="link" href="resume.pdf" target="_blank" rel="noopener">Open in browser</a>
+        </div>
+        <div class="qr-right">
+          <div id="qr"></div>
+        </div>
+      </article>
 
-  <noscript>
-    <p style="text-align:center;margin-top:1rem;">
-      <a href="resume.pdf" download>Download resume (PDF)</a>
-    </p>
-  </noscript>
+      <!-- OPTIONAL INFO TILE -->
+      <article class="tile info">
+        <p>Contact: <a href="mailto:you@example.com">you@example.com</a></p>
+      </article>
+    </section>
+  </main>
 
-  <script>
-    /* ---------- Glitch background ---------- */
-    class LetterGlitch {
-      constructor(canvas, options = {}) {
-        this.canvas = canvas; this.ctx = canvas.getContext("2d");
-        this.glitchColors = options.glitchColors || ["#2ad6ff","#3773ed","#fdfcff"];
-        this.glitchSpeed = options.glitchSpeed || 120;
-        this.fontSize = 28; this.charWidth = 30; this.charHeight = 42;
-        this.letters = []; this.grid = { columns: 0, rows: 0 };
-        this.lastGlitchTime = Date.now(); this.animationId = null;
-        this.drawW = 0; this.drawH = 0;
-        this.lettersAndSymbols = [
-          ..."0123456789", ..."0123456789",
-          ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-          ..."+-*/=<>≤≥±∞π√∑∏∫∂Δ".split(""),
-          ..."αβγδεζηθικλμνξοπρστυφχψω".split(""),
-        ];
-        this.init();
-      }
-      getRandomChar(){ return this.lettersAndSymbols[Math.floor(Math.random()*this.lettersAndSymbols.length)] }
-      getRandomColor(){ return this.glitchColors[Math.floor(Math.random()*this.glitchColors.length)] }
-      calculateGrid(w,h){ return { columns: Math.ceil(w/this.charWidth)+2, rows: Math.ceil(h/this.charHeight)+2 } }
-      initializeLetters(c,r){ this.grid={columns:c,rows:r}; this.letters=Array.from({length:c*r},()=>({char:this.getRandomChar(),color:this.getRandomColor()})) }
-      resizeCanvas(){
-        const parent=this.canvas.parentElement; if(!parent) return;
-        const dpr=window.devicePixelRatio||1, rect=parent.getBoundingClientRect();
-        this.drawW=Math.floor(rect.width); this.drawH=Math.floor(rect.height);
-        this.canvas.width=this.drawW*dpr; this.canvas.height=this.drawH*dpr;
-        this.canvas.style.width=`${this.drawW}px`; this.canvas.style.height=`${this.drawH}px`;
-        this.ctx.setTransform(dpr,0,0,dpr,0,0);
-        const {columns,rows}=this.calculateGrid(this.drawW,this.drawH);
-        this.initializeLetters(columns,rows); this.drawLetters();
-      }
-      drawLetters(){
-        if(!this.ctx||!this.letters.length) return;
-        this.ctx.clearRect(0,0,this.drawW,this.drawH);
-        this.ctx.font=`${this.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
-        this.ctx.textBaseline="top";
-        this.letters.forEach((cell,i)=>{
-          const col=i%this.grid.columns, row=Math.floor(i/this.grid.columns);
-          const x=(col-1)*this.charWidth, y=(row-1)*this.charHeight;
-          this.ctx.fillStyle=cell.color; this.ctx.fillText(cell.char,x,y);
-        });
-      }
-      updateLetters(){
-        if(!this.letters.length) return;
-        const n=Math.max(1,Math.floor(this.letters.length*.01));
-        for(let i=0;i<n;i++){
-          const idx=Math.floor(Math.random()*this.letters.length), cell=this.letters[idx];
-          cell.char=this.getRandomChar(); cell.color=this.getRandomColor();
-        }
-      }
-      animate(){
-        const now=Date.now();
-        if(now-this.lastGlitchTime>=this.glitchSpeed){ this.updateLetters(); this.drawLetters(); this.lastGlitchTime=now; }
-        this.animationId=requestAnimationFrame(()=>this.animate());
-      }
-      init(){
-        this.resizeCanvas(); this.animate();
-        let t; const onResize=()=>{ clearTimeout(t); t=setTimeout(()=>{ cancelAnimationFrame(this.animationId); this.resizeCanvas(); this.animate(); },120) };
-        window.addEventListener("resize", onResize); this.onResize=onResize;
-      }
-      destroy(){ if(this.animationId) cancelAnimationFrame(this.animationId); window.removeEventListener("resize", this.onResize); }
-    }
-
-    /* ---------- Split text without breaking words ---------- */
-    class SplitTextAnimation {
-      constructor(element, options = {}) {
-        this.element = element;
-        this.text = options.text || element.textContent;
-        this.delay = options.delay || 45;
-        this.duration = options.duration || 0.6;
-        this.ease = options.ease || "power3.out";
-        this.from = options.from || { opacity: 0, y: 50 };
-        this.to = options.to || { opacity: 1, y: 0 };
-        this.onComplete = options.onComplete;
-        this.chars = []; this.timeline = null;
-        this.init();
-      }
-      splitText(){
-        const t=this.text;
-        this.element.innerHTML=""; this.element.style.opacity="1"; this.element.style.visibility="visible";
-        const frag=document.createDocumentFragment(); const tokens=t.split(/(\s+)/);
-        tokens.forEach(token=>{
-          if(token.trim()===""){ frag.appendChild(document.createTextNode(token)); }
-          else{
-            const word=document.createElement("span"); word.className="word"; word.style.display="inline-block"; word.style.whiteSpace="nowrap";
-            for(let i=0;i<token.length;i++){ const span=document.createElement("span"); span.textContent=token[i]; span.style.display="inline-block"; span.style.willChange="transform, opacity"; gsap.set(span, this.from); this.chars.push(span); word.appendChild(span); }
-            frag.appendChild(word);
-          }
-        });
-        this.element.appendChild(frag);
-      }
-      animate(){
-        if(!this.chars.length) return;
-        this.timeline=gsap.timeline({onComplete:()=>{this.chars.forEach(c=>c.style.willChange="auto"); this.onComplete&&this.onComplete();}});
-        this.timeline.to(this.chars,{...this.to, duration:this.duration, ease:this.ease, stagger:this.delay/1000, force3D:true});
-      }
-      init(){ this.splitText(); this.animate(); }
-      destroy(){ if(this.timeline) this.timeline.kill(); }
-    }
-
-    /* Init animations + QR modal */
-    document.addEventListener("DOMContentLoaded", () => {
-      const canvas = document.getElementById("glitch-canvas");
-      if (canvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        new LetterGlitch(canvas, { glitchSpeed: 300 });
-      }
-
-      new SplitTextAnimation(document.getElementById("hero"), {
-        delay: 36, duration: 0.6, ease: "power3.out",
-        from: { opacity: 0, y: 60, rotationX: -90 }, to: { opacity: 1, y: 0, rotationX: 0 }
-      });
-      setTimeout(() => {
-        new SplitTextAnimation(document.getElementById("sub"), {
-          delay: 22, duration: 0.5, ease: "power2.out",
-          from: { opacity: 0, y: 36, scale: 0.94 }, to: { opacity: 1, y: 0, scale: 1 }
-        });
-      }, 450);
-
-      /* QR modal behavior */
-      const chip = document.getElementById('qrChip');
-      const modal = document.getElementById('qrModal');
-      const open = () => { modal.setAttribute('data-open','true'); chip.setAttribute('aria-expanded','true'); };
-      const close = () => { modal.removeAttribute('data-open'); chip.setAttribute('aria-expanded','false'); };
-      chip.addEventListener('click', open);
-      chip.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); }});
-      modal.addEventListener('click', e => { if(e.target.hasAttribute('data-close')) close(); });
-      document.addEventListener('keydown', e => { if(e.key==='Escape') close(); });
-    });
-  </script>
+  <!-- Lightweight QR generator with logo support -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
