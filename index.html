@@ -1,67 +1,827 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Welcome to my personal website</title>
-  <link rel="icon" href="assets/favicon.svg">
-  <link rel="preload" as="image" href="assets/placeholder-face.svg">
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Personal Website | Welcome</title>
+
+  <!-- Fonts & Libraries -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ========== CSS Variables ========== */
+    :root {
+      --accent: #f5a341;
+      --bg-dark: #18090e;
+      --border-accent: rgba(245, 163, 65, 0.15);
+      --shadow-accent: rgba(245, 163, 65, 0.05);
+    }
+
+    /* ========== Base Styles ========== */
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-dark);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      overflow-x: hidden;
+      font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      /* Respect notches/safe areas on mobile */
+      padding: max(0.75rem, env(safe-area-inset-top)) 
+               max(0.75rem, env(safe-area-inset-right))
+               max(0.75rem, env(safe-area-inset-bottom)) 
+               max(0.75rem, env(safe-area-inset-left));
+    }
+
+    /* ========== Background Animation ========== */
+    #letter-glitch-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+
+    #glitch-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 0.85;
+      filter: blur(0.3px);
+    }
+
+    .center-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(0, 0, 0, 0.9) 80%
+      );
+    }
+
+    /* ========== Main Content Container (Frosted Glass) ========== */
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: fit-content;
+      max-width: min(90vw, 36rem);
+      padding: 2.5rem 4rem;
+      background: linear-gradient(
+        135deg,
+        rgba(24, 9, 14, 0.85) 0%,
+        rgba(0, 0, 0, 0.75) 50%,
+        rgba(24, 9, 14, 0.9) 100%
+      );
+      backdrop-filter: blur(15px) saturate(1.2);
+      border-radius: 1.25rem;
+      border: 1px solid var(--border-accent);
+      box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.4),
+        inset 0 0 24px var(--shadow-accent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Main Content Section */
+    .main-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .content-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(245, 163, 65, 0.08) 0%,
+        transparent 50%,
+        rgba(245, 163, 65, 0.03) 100%
+      );
+      border-radius: 1rem;
+      pointer-events: none;
+    }
+
+    /* ========== Typography ========== */
+    .welcome-text,
+    .subtitle {
+      margin: 0;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--accent);
+      text-wrap: balance;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: auto;
+      letter-spacing: -0.01em;
+    }
+
+    .welcome-text {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+
+    .subtitle {
+      font-weight: 700;
+      font-size: clamp(0.95rem, 3vw, 1.2rem);
+      margin-top: 0.5rem;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* ========== Additional Mobile Responsive ========== */
+    @media (max-width: 520px) {
+      .content-container {
+        max-width: 95vw;
+        padding: 2rem 2rem;
+      }
+
+      .main-section {
+        gap: 1.25rem;
+      }
+
+      .welcome-text {
+        font-size: clamp(1.4rem, 7vw, 2.2rem);
+      }
+
+      .subtitle {
+        font-size: clamp(0.9rem, 4vw, 1.15rem);
+      }
+
+      .buttons-container {
+        flex-direction: column;
+      }
+
+      .button-wrapper {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      #glitch-canvas {
+        opacity: 0.7;
+        filter: blur(0.5px);
+      }
+    }
+
+    /* ========== Button Container Styles ========== */
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .button-wrapper {
+      flex: 1 1 auto;
+      min-width: 10rem;
+      max-width: 13rem;
+    }
+
+    /* Reorder buttons in vertical layout */
+    .button-wrapper.qr-wrapper {
+      order: 2;
+    }
+
+    .button-wrapper.resume-wrapper {
+      order: 1;
+    }
+
+    /* ========== Shared Button Styles ========== */
+    .styled-button {
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.5s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(
+        to bottom right,
+        rgba(245, 163, 65, 0.1),
+        rgba(0, 0, 0, 0.6),
+        rgba(245, 163, 65, 0.05)
+      );
+      backdrop-filter: blur(12px) saturate(1.2);
+      border: 2px solid rgba(245, 163, 65, 0.3);
+      border-radius: 1rem;
+      box-shadow: 
+        0 4px 16px 0 rgba(0, 0, 0, 0.3),
+        inset 0 0 12px rgba(245, 163, 65, 0.1);
+      overflow: hidden;
+    }
+
+    .styled-button:hover {
+      transform: scale(1.02) translateY(-2px);
+      border-color: rgba(245, 163, 65, 0.5);
+      box-shadow: 
+        0 6px 20px 0 rgba(245, 163, 65, 0.2),
+        inset 0 0 16px rgba(245, 163, 65, 0.15);
+    }
+
+    .styled-button:active {
+      transform: scale(0.95);
+    }
+
+    /* Button shine effect */
+    .button-shine {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(245, 163, 65, 0.3),
+        transparent
+      );
+      transform: translateX(-100%);
+      transition: transform 1s ease-out;
+    }
+
+    .styled-button:hover .button-shine {
+      transform: translateX(100%);
+    }
+
+    /* Button gradient overlay */
+    .button-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(245, 163, 65, 0.1),
+        rgba(255, 163, 65, 0.2),
+        rgba(245, 163, 65, 0.1)
+      );
+      opacity: 0;
+      transition: opacity 0.5s;
+      border-radius: 1rem;
+    }
+
+    .styled-button:hover .button-overlay {
+      opacity: 1;
+    }
+
+    .icon-container {
+      position: relative;
+      z-index: 1;
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(
+        to bottom right,
+        rgba(245, 163, 65, 0.3),
+        rgba(255, 163, 65, 0.1)
+      );
+      backdrop-filter: blur(4px);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .styled-button:hover .icon-container {
+      background: linear-gradient(
+        to bottom right,
+        rgba(245, 163, 65, 0.4),
+        rgba(255, 163, 65, 0.2)
+      );
+    }
+
+    .button-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: none;
+      stroke: rgba(245, 163, 65, 0.9);
+      stroke-width: 2;
+      transition: all 0.3s ease;
+    }
+
+    .styled-button:hover .button-icon {
+      stroke: rgba(245, 163, 65, 1);
+      transform: scale(1.1);
+    }
+
+    .text-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      text-align: left;
+    }
+
+    .button-text {
+      color: rgba(245, 163, 65, 0.95);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      transition: color 0.3s ease;
+    }
+
+    .styled-button:hover .button-text {
+      color: rgba(245, 163, 65, 1);
+    }
+
+    .button-hint {
+      color: rgba(245, 163, 65, 0.6);
+      font-size: 0.75rem;
+      margin-top: 0.125rem;
+      transition: color 0.3s ease;
+    }
+
+    .styled-button:hover .button-hint {
+      color: rgba(245, 163, 65, 0.8);
+    }
+
+    /* Arrow indicator */
+    .arrow-indicator {
+      position: relative;
+      z-index: 1;
+      opacity: 0.4;
+      transition: all 0.3s ease;
+    }
+
+    .styled-button:hover .arrow-indicator {
+      opacity: 1;
+      transform: translateX(0.25rem);
+    }
+
+    .arrow-icon {
+      width: 1rem;
+      height: 1rem;
+      stroke: rgba(245, 163, 65, 0.9);
+      fill: none;
+    }
+
+    /* Device-specific text */
+    .tap-text {
+      display: none;
+    }
+
+    .click-text {
+      display: inline;
+    }
+
+    /* Touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .tap-text {
+        display: inline;
+      }
+      .click-text {
+        display: none;
+      }
+    }
+
+    /* QR Modal Overlay */
+    .qr-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .qr-modal.active {
+      display: flex;
+    }
+
+    .qr-modal-content {
+      position: relative;
+      padding: 2rem;
+      background: linear-gradient(
+        135deg,
+        rgba(24, 9, 14, 0.95) 0%,
+        rgba(0, 0, 0, 0.9) 50%,
+        rgba(24, 9, 14, 0.95) 100%
+      );
+      backdrop-filter: blur(20px) saturate(1.5);
+      border: 2px solid rgba(245, 163, 65, 0.4);
+      border-radius: 1.5rem;
+      box-shadow: 
+        0 12px 48px 0 rgba(0, 0, 0, 0.5),
+        inset 0 0 32px rgba(245, 163, 65, 0.15);
+      animation: scaleIn 0.3s ease;
+      cursor: default;
+    }
+
+    .qr-modal-content:click {
+      cursor: default;
+    }
+
+    .qr-modal-img {
+      width: 600px;
+      height: 600px;
+      display: block;
+      image-rendering: crisp-edges;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-crisp-edges;
+      image-rendering: pixelated;
+      -ms-interpolation-mode: nearest-neighbor;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 0.5rem;
+    }
+
+    .qr-modal-text {
+      margin-top: 1.5rem;
+      text-align: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .qr-close-hint {
+      margin-top: 1rem;
+      text-align: center;
+      color: rgba(245, 163, 65, 0.6);
+      font-size: 0.85rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Tablet adjustments */
+    @media (max-width: 768px) {
+      .content-container {
+        max-width: min(88vw, 32rem);
+        padding: 2rem 2.5rem;
+      }
+
+      .qr-modal-content {
+        padding: 1.5rem;
+      }
+
+      .qr-modal-img {
+        width: 400px;
+        height: 400px;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .styled-button {
+        padding: 0.625rem 0.875rem;
+      }
+
+      .button-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .button-text {
+        font-size: 0.9rem;
+      }
+
+      .button-hint {
+        font-size: 0.7rem;
+      }
+
+      .qr-modal-img {
+        width: 300px;
+        height: 300px;
+        padding: 15px;
+      }
+    }
+
+    /* ========== Accessibility ========== */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <canvas id="bg" aria-hidden="true"></canvas>
+  <!-- Background Animation -->
+  <div id="letter-glitch-bg" aria-hidden="true">
+    <canvas id="glitch-canvas"></canvas>
+    <div class="center-vignette"></div>
+  </div>
 
-  <main class="shell">
-    <section class="grid">
-      <!-- HERO -->
-      <article class="tile hero">
-        <h1>Welcome to my personal website!</h1>
-        <p class="sub">
-          <span aria-hidden="true">⚠️</span>
-          <strong>Undergoing a rewrite.</strong> Thanks for visiting.
-        </p>
-      </article>
+  <!-- Main Content -->
+  <div class="content-container">
+    <!-- Main Section -->
+    <div class="main-section">
+      <h2 class="welcome-text">Welcome to my personal website!</h2>
+      <p class="subtitle">⚠️ This site is currently being rewritten... ⚠️</p>
 
-      <!-- DOWNLOAD TILE -->
-      <article class="tile cta">
-        <div class="stack">
-          <div class="cta-header">
-            <div class="icon">⬇️</div>
-            <div>
-              <h2>Download Resume</h2>
-              <p class="muted">PDF · fast & lightweight</p>
+      <!-- Buttons Container -->
+      <div class="buttons-container">
+        <!-- QR Code Button -->
+        <div class="button-wrapper qr-wrapper">
+          <button class="styled-button" onclick="openQRModal()" aria-label="View QR Code for Resume">
+            <div class="button-shine"></div>
+            <div class="button-overlay"></div>
+            <div class="icon-container">
+              <svg class="button-icon" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" stroke-linejoin="round"/>
+                <rect x="14" y="3" width="7" height="7" stroke-linejoin="round"/>
+                <rect x="3" y="14" width="7" height="7" stroke-linejoin="round"/>
+                <rect x="15" y="15" width="2" height="2" stroke-linejoin="round"/>
+                <rect x="19" y="15" width="2" height="2" stroke-linejoin="round"/>
+                <rect x="15" y="19" width="2" height="2" stroke-linejoin="round"/>
+                <rect x="19" y="19" width="2" height="2" stroke-linejoin="round"/>
+              </svg>
             </div>
-            <a class="chev" href="resume.pdf" download aria-label="Download resume">›</a>
-          </div>
-          <a class="btn" href="resume.pdf" download>
-            Download PDF
+            <div class="text-content">
+              <div class="button-text">
+                QR Code
+              </div>
+              <div class="button-hint">
+                <span class="tap-text">Tap</span>
+                <span class="click-text">Click</span>
+                to scan
+              </div>
+            </div>
+            <div class="arrow-indicator">
+              <svg viewBox="0 0 24 24" class="arrow-icon">
+                <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </button>
+        </div>
+
+        <!-- Resume View Button -->
+        <div class="button-wrapper resume-wrapper">
+          <a href="resume.pdf" target="_blank" rel="noopener noreferrer" style="display: block;">
+            <button class="styled-button" aria-label="View Resume in Browser">
+              <div class="button-shine"></div>
+              <div class="button-overlay"></div>
+              <div class="icon-container">
+                <svg class="button-icon" viewBox="0 0 24 24">
+                  <!-- Eye icon -->
+                  <circle cx="12" cy="12" r="3" stroke-linejoin="round"/>
+                  <path d="M2 12c1.6-4.097 5.336-7 10-7s8.4 2.903 10 7c-1.6 4.097-5.336 7-10 7s-8.4-2.903-10-7z" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="text-content">
+                <div class="button-text">
+                  Resume
+                </div>
+                <div class="button-hint">
+                  View PDF
+                </div>
+              </div>
+              <div class="arrow-indicator">
+                <svg viewBox="0 0 24 24" class="arrow-icon">
+                  <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+              </div>
+            </button>
           </a>
         </div>
-      </article>
+      </div>
+    </div>
+  </div>
 
-      <!-- QR TILE -->
-      <article class="tile qr">
-        <div class="qr-left">
-          <small>SCAN TO</small>
-          <div class="qr-caption">
-            <strong>Save</strong> Resume<br>(PDF)
-          </div>
-          <a class="link" href="resume.pdf" target="_blank" rel="noopener">Open in browser</a>
-        </div>
-        <div class="qr-right">
-          <div id="qr"></div>
-        </div>
-      </article>
+  <!-- QR Modal Overlay -->
+  <div id="qrModal" class="qr-modal" onclick="closeQRModal(event)">
+    <div class="qr-modal-content" onclick="event.stopPropagation()">
+      <img src="resume_qr_code.png" alt="QR Code for Resume - Enlarged" class="qr-modal-img" />
+      <div class="qr-modal-text">Scan to open resume in browser</div>
+      <div class="qr-close-hint">Click outside to close</div>
+    </div>
+  </div>
 
-      <!-- OPTIONAL INFO TILE -->
-      <article class="tile info">
-        <p>Contact: <a href="mailto:you@example.com">you@example.com</a></p>
-      </article>
-    </section>
-  </main>
+  <script>
+    /**
+     * LetterGlitch - Animated background with glitching letters
+     */
+    class LetterGlitch {
+      constructor(canvas, options = {}) {
+        // Configuration
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
+        this.glitchColors = options.glitchColors || [
+          "#f5a341", "#fb923c", "#f97316", "#ea580c", "#fdba74"
+        ];
+        this.glitchSpeed = options.glitchSpeed || 100;
 
-  <!-- Lightweight QR generator with logo support -->
-  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-  <script src="app.js"></script>
+        // Typography settings
+        this.fontSize = 28;
+        this.charWidth = 30;
+        this.charHeight = 42;
+
+        // State
+        this.letters = [];
+        this.grid = { columns: 0, rows: 0 };
+        this.lastGlitchTime = Date.now();
+        this.animationId = null;
+        this.drawW = 0;
+        this.drawH = 0;
+
+        // Character pool
+        this.lettersAndSymbols = [
+          ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+          ..."!@#$&*()-_+=/[]{};:<>,".split(""),
+          ..."0123456789",
+        ];
+
+        this.init();
+      }
+
+      getRandomChar() {
+        return this.lettersAndSymbols[
+          Math.floor(Math.random() * this.lettersAndSymbols.length)
+        ];
+      }
+
+      getRandomColor() {
+        return this.glitchColors[
+          Math.floor(Math.random() * this.glitchColors.length)
+        ];
+      }
+
+      calculateGrid(width, height) {
+        return {
+          columns: Math.ceil(width / this.charWidth) + 2,
+          rows: Math.ceil(height / this.charHeight) + 2
+        };
+      }
+
+      initializeLetters(columns, rows) {
+        this.grid = { columns, rows };
+        this.letters = Array.from({ length: columns * rows }, () => ({
+          char: this.getRandomChar(),
+          color: this.getRandomColor()
+        }));
+      }
+
+      resizeCanvas() {
+        const parent = this.canvas.parentElement;
+        if (!parent) return;
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = parent.getBoundingClientRect();
+        
+        this.drawW = Math.floor(rect.width);
+        this.drawH = Math.floor(rect.height);
+        
+        this.canvas.width = this.drawW * dpr;
+        this.canvas.height = this.drawH * dpr;
+        this.canvas.style.width = `${this.drawW}px`;
+        this.canvas.style.height = `${this.drawH}px`;
+        
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        
+        const { columns, rows } = this.calculateGrid(this.drawW, this.drawH);
+        this.initializeLetters(columns, rows);
+        this.drawLetters();
+      }
+
+      drawLetters() {
+        if (!this.ctx || !this.letters.length) return;
+
+        this.ctx.clearRect(0, 0, this.drawW, this.drawH);
+        this.ctx.font = `${this.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+        this.ctx.textBaseline = "top";
+
+        this.letters.forEach((cell, index) => {
+          const col = index % this.grid.columns;
+          const row = Math.floor(index / this.grid.columns);
+          const x = (col - 1) * this.charWidth;
+          const y = (row - 1) * this.charHeight;
+          
+          this.ctx.fillStyle = cell.color;
+          this.ctx.fillText(cell.char, x, y);
+        });
+      }
+
+      updateLetters() {
+        if (!this.letters.length) return;
+
+        const glitchCount = Math.max(1, Math.floor(this.letters.length * 0.01));
+        
+        for (let i = 0; i < glitchCount; i++) {
+          const randomIndex = Math.floor(Math.random() * this.letters.length);
+          const cell = this.letters[randomIndex];
+          cell.char = this.getRandomChar();
+          cell.color = this.getRandomColor();
+        }
+      }
+
+      animate() {
+        const now = Date.now();
+        
+        if (now - this.lastGlitchTime >= this.glitchSpeed) {
+          this.updateLetters();
+          this.drawLetters();
+          this.lastGlitchTime = now;
+        }
+        
+        this.animationId = requestAnimationFrame(() => this.animate());
+      }
+
+      init() {
+        this.resizeCanvas();
+        this.animate();
+
+        // Debounced resize handler
+        let resizeTimeout;
+        const handleResize = () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            cancelAnimationFrame(this.animationId);
+            this.resizeCanvas();
+            this.animate();
+          }, 120);
+        };
+
+        window.addEventListener("resize", handleResize);
+        this.handleResize = handleResize;
+      }
+
+      destroy() {
+        if (this.animationId) {
+          cancelAnimationFrame(this.animationId);
+        }
+        window.removeEventListener("resize", this.handleResize);
+      }
+    }
+
+    /**
+     * QR Modal Functions
+     */
+    function openQRModal() {
+      const modal = document.getElementById('qrModal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Preload image for pixel-perfect display
+        const img = modal.querySelector('.qr-modal-img');
+        if (img) {
+          img.style.imageRendering = 'pixelated';
+          img.style.imageRendering = 'crisp-edges';
+        }
+      }
+    }
+
+    function closeQRModal(event) {
+      const modal = document.getElementById('qrModal');
+      if (modal && (event.target === modal || event.type === 'keydown')) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeQRModal(e);
+      }
+    });
+
+    /**
+     * Initialize on DOM load
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("glitch-canvas");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      
+      if (canvas && !prefersReducedMotion) {
+        new LetterGlitch(canvas, {
+          glitchSpeed: 400
+        });
+      }
+    });
+  </script>
 </body>
 </html>

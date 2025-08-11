@@ -1,0 +1,476 @@
+/* ============================= */
+/* Effects CSS - Glitch, Frosted-Glass, Transitions */
+/* ============================= */
+
+/* ============================= */
+/* Glitch Effect */
+/* ============================= */
+
+.glitch {
+    position: relative;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: #00ffff;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: #ff00ff;
+    z-index: -2;
+}
+
+@keyframes glitch-1 {
+    0% {
+        clip: rect(44px, 9999px, 56px, 0);
+        transform: skew(0.5deg);
+    }
+    5% {
+        clip: rect(25px, 9999px, 90px, 0);
+        transform: skew(0.9deg);
+    }
+    10% {
+        clip: rect(65px, 9999px, 120px, 0);
+        transform: skew(0.3deg);
+    }
+    15% {
+        clip: rect(30px, 9999px, 78px, 0);
+        transform: skew(0.6deg);
+    }
+    20% {
+        clip: rect(80px, 9999px, 45px, 0);
+        transform: skew(0.8deg);
+    }
+    25% {
+        clip: rect(10px, 9999px, 95px, 0);
+        transform: skew(0.2deg);
+    }
+    30% {
+        clip: rect(50px, 9999px, 60px, 0);
+        transform: skew(0.7deg);
+    }
+    35% {
+        clip: rect(70px, 9999px, 30px, 0);
+        transform: skew(0.4deg);
+    }
+    40% {
+        clip: rect(90px, 9999px, 10px, 0);
+        transform: skew(0.9deg);
+    }
+    45% {
+        clip: rect(25px, 9999px, 85px, 0);
+        transform: skew(0.3deg);
+    }
+    50% {
+        clip: rect(40px, 9999px, 70px, 0);
+        transform: skew(0.6deg);
+    }
+    55% {
+        clip: rect(15px, 9999px, 100px, 0);
+        transform: skew(0.5deg);
+    }
+    60% {
+        clip: rect(75px, 9999px, 35px, 0);
+        transform: skew(0.8deg);
+    }
+    65% {
+        clip: rect(55px, 9999px, 65px, 0);
+        transform: skew(0.2deg);
+    }
+    70% {
+        clip: rect(20px, 9999px, 90px, 0);
+        transform: skew(0.7deg);
+    }
+    75% {
+        clip: rect(85px, 9999px, 20px, 0);
+        transform: skew(0.4deg);
+    }
+    80% {
+        clip: rect(35px, 9999px, 75px, 0);
+        transform: skew(0.9deg);
+    }
+    85% {
+        clip: rect(60px, 9999px, 50px, 0);
+        transform: skew(0.1deg);
+    }
+    90% {
+        clip: rect(95px, 9999px, 15px, 0);
+        transform: skew(0.6deg);
+    }
+    95% {
+        clip: rect(45px, 9999px, 65px, 0);
+        transform: skew(0.3deg);
+    }
+    100% {
+        clip: rect(30px, 9999px, 80px, 0);
+        transform: skew(0.5deg);
+    }
+}
+
+@keyframes glitch-2 {
+    0% {
+        clip: rect(65px, 9999px, 100px, 0);
+        transform: skew(0.8deg);
+    }
+    5% {
+        clip: rect(35px, 9999px, 75px, 0);
+        transform: skew(0.2deg);
+    }
+    10% {
+        clip: rect(90px, 9999px, 25px, 0);
+        transform: skew(0.6deg);
+    }
+    15% {
+        clip: rect(15px, 9999px, 95px, 0);
+        transform: skew(0.4deg);
+    }
+    20% {
+        clip: rect(55px, 9999px, 60px, 0);
+        transform: skew(0.9deg);
+    }
+    25% {
+        clip: rect(75px, 9999px, 40px, 0);
+        transform: skew(0.3deg);
+    }
+    30% {
+        clip: rect(20px, 9999px, 85px, 0);
+        transform: skew(0.7deg);
+    }
+    35% {
+        clip: rect(45px, 9999px, 70px, 0);
+        transform: skew(0.5deg);
+    }
+    40% {
+        clip: rect(80px, 9999px, 30px, 0);
+        transform: skew(0.1deg);
+    }
+    45% {
+        clip: rect(10px, 9999px, 100px, 0);
+        transform: skew(0.8deg);
+    }
+    50% {
+        clip: rect(60px, 9999px, 50px, 0);
+        transform: skew(0.4deg);
+    }
+    55% {
+        clip: rect(25px, 9999px, 80px, 0);
+        transform: skew(0.6deg);
+    }
+    60% {
+        clip: rect(70px, 9999px, 35px, 0);
+        transform: skew(0.2deg);
+    }
+    65% {
+        clip: rect(40px, 9999px, 65px, 0);
+        transform: skew(0.9deg);
+    }
+    70% {
+        clip: rect(85px, 9999px, 20px, 0);
+        transform: skew(0.3deg);
+    }
+    75% {
+        clip: rect(30px, 9999px, 90px, 0);
+        transform: skew(0.7deg);
+    }
+    80% {
+        clip: rect(50px, 9999px, 55px, 0);
+        transform: skew(0.5deg);
+    }
+    85% {
+        clip: rect(95px, 9999px, 10px, 0);
+        transform: skew(0.1deg);
+    }
+    90% {
+        clip: rect(15px, 9999px, 85px, 0);
+        transform: skew(0.8deg);
+    }
+    95% {
+        clip: rect(65px, 9999px, 45px, 0);
+        transform: skew(0.4deg);
+    }
+    100% {
+        clip: rect(35px, 9999px, 75px, 0);
+        transform: skew(0.6deg);
+    }
+}
+
+/* ============================= */
+/* Frosted Glass Effect */
+/* ============================= */
+
+.frosted-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.frosted-glass-dark {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.frosted-glass-colored {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(102, 126, 234, 0.37);
+}
+
+/* ============================= */
+/* Smooth Transitions */
+/* ============================= */
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.scale-in {
+    animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.rotate-in {
+    animation: rotateIn 0.6s ease-out;
+}
+
+@keyframes rotateIn {
+    from {
+        transform: rotate(-180deg) scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ============================= */
+/* Hover Effects */
+/* ============================= */
+
+.hover-grow {
+    transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+    transform: scale(1.1);
+}
+
+.hover-shrink {
+    transition: transform 0.3s ease;
+}
+
+.hover-shrink:hover {
+    transform: scale(0.95);
+}
+
+.hover-rotate {
+    transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+    transform: rotate(5deg);
+}
+
+.hover-shadow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================= */
+/* Pulse Animation */
+/* ============================= */
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ============================= */
+/* Shimmer Effect */
+/* ============================= */
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 20%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.2) 80%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* ============================= */
+/* Gradient Animation */
+/* ============================= */
+
+.gradient-animation {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================= */
+/* Typewriter Effect */
+/* ============================= */
+
+.typewriter {
+    overflow: hidden;
+    border-right: 0.15em solid #667eea;
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #667eea;
+    }
+}
